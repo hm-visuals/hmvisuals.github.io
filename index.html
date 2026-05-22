@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Videographer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #111110;
+    --white: #FAFAF8;
+    --gray-light: #F1EFE8;
+    --gray-mid: #D3D1C7;
+    --gray-text: #5F5E5A;
+    --accent: #111110;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-color: var(--gray-mid); }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: var(--black);
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--gray-text);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--white);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--gray-light);
+    clip-path: polygon(0 0, 58% 0, 45% 100%, 0 100%);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-text);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 2rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gray-text);
+  }
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--gray-text);
+    max-width: 420px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--white);
+    background: var(--black);
+    padding: 1rem 2rem;
+    transition: opacity 0.2s;
+  }
+  .hero-cta:hover { opacity: 0.8; }
+  .hero-cta svg { transition: transform 0.2s; }
+  .hero-cta:hover svg { transform: translateX(4px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    right: 4rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-text);
+    writing-mode: vertical-rl;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-scroll::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: var(--gray-mid);
+  }
+
+  /* SECTION COMMON */
+  section { padding: 7rem 4rem; }
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-text);
+    margin-bottom: 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--gray-mid);
+  }
+
+  /* WORK / PORTFOLIO */
+  #work { background: var(--white); }
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+  .work-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+  }
+  .work-filter {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .filter-btn {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--gray-mid);
+    background: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: var(--gray-text);
+    transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+  }
+  .card {
+    position: relative;
+    overflow: hidden;
+    background: var(--gray-light);
+    cursor: pointer;
+  }
+  .card:nth-child(1) { grid-column: span 7; }
+  .card:nth-child(2) { grid-column: span 5; }
+  .card:nth-child(3) { grid-column: span 4; }
+  .card:nth-child(4) { grid-column: span 8; }
+  .card:nth-child(5) { grid-column: span 6; }
+  .card:nth-child(6) { grid-column: span 6; }
+
+  .card-thumb {
+    aspect-ratio: 16/10;
+    background: var(--gray-light);
+    overflow: hidden;
+    position: relative;
+  }
+  .card:nth-child(1) .card-thumb { aspect-ratio: 16/9; }
+  .card:nth-child(4) .card-thumb { aspect-ratio: 16/9; }
+
+  /* Placeholder visuals */
+  .card-thumb::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #D3D1C7 0%, #B4B2A9 100%);
+  }
+  .card:nth-child(1) .card-thumb::before { background: linear-gradient(135deg, #888780 0%, #5F5E5A 100%); }
+  .card:nth-child(3) .card-thumb::before { background: linear-gradient(135deg, #B4B2A9 0%, #888780 100%); }
+  .card:nth-child(5) .card-thumb::before { background: linear-gradient(135deg, #5F5E5A 0%, #2C2C2A 100%); }
+
+  .card-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    background: rgba(17,17,16,0.35);
+    transition: opacity 0.3s;
+  }
+  .card-play svg { color: #fff; }
+  .card:hover .card-play { opacity: 1; }
+
+  /* video thumb placeholder label */
+  .card-thumb-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+    pointer-events: none;
+  }
+
+  .card-info {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .card-title { font-size: 0.9rem; font-weight: 500; }
+  .card-meta { font-size: 0.78rem; color: var(--gray-text); }
+
+  /* ABOUT */
+  #about {
+    background: var(--gray-light);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .about-image {
+    aspect-ratio: 4/5;
+    background: var(--gray-mid);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-image::after {
+    content: 'Your photo here';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: var(--gray-text);
+    letter-spacing: 0.05em;
+  }
+  .about-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+  .about-text p {
+    color: var(--gray-text);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--gray-mid);
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 400;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-text);
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  /* SERVICES */
+  #services { background: var(--white); }
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+  .services-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+  }
+  .services-list { display: grid; gap: 0; }
+  .service-item {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--gray-light);
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .service-item:first-child { border-top: 1px solid var(--gray-light); }
+  .service-num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--gray-text);
+  }
+  .service-name { font-size: 1.05rem; font-weight: 400; }
+  .service-desc {
+    font-size: 0.85rem;
+    color: var(--gray-text);
+    max-width: 380px;
+    margin-top: 0.3rem;
+  }
+  .service-arrow {
+    color: var(--gray-mid);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .service-item:hover .service-arrow {
+    color: var(--black);
+    transform: translateX(4px);
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--black);
+    color: var(--white);
+    text-align: center;
+  }
+  #contact .section-label { color: #888780; justify-content: center; }
+  #contact .section-label::after { display: none; }
+  .contact-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .contact-title em { font-style: italic; color: #888780; }
+  .contact-sub {
+    color: #888780;
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+  }
+  .contact-email {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    color: var(--white);
+    text-decoration: none;
+    border-bottom: 1px solid #444441;
+    padding-bottom: 0.25rem;
+    transition: border-color 0.2s;
+  }
+  .contact-email:hover { border-color: var(--white); }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid #2C2C2A;
+  }
+  .contact-link {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888780;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--white); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid #2C2C2A;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p { font-size: 0.78rem; color: #444441; }
+
+  /* VIDEO MODAL */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(17,17,16,0.95);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-inner { position: relative; width: min(800px, 90vw); }
+  .modal-video-wrap {
+    aspect-ratio: 16/9;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888780;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+  .modal-close {
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .modal-close:hover { opacity: 1; }
+  .modal-title {
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-top: 1.25rem;
+  }
+  .modal-meta { color: #888780; font-size: 0.82rem; margin-top: 0.25rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .hero-scroll { display: none; }
+    .card:nth-child(n) { grid-column: span 12; }
+    #about { grid-template-columns: 1fr; gap: 2rem; }
+    .work-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    footer { padding: 1.25rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Your Name</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Commercial Videographer — Based in [Your City]</p>
+    <h1>Visuals that<br>make brands <em>move.</em></h1>
+    <p class="hero-desc">Brand films, corporate content, and commercial video production crafted to communicate with precision and impact.</p>
+    <a href="#work" class="hero-cta">
+      View Work
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-label">Selected Work</div>
+  <div class="work-header">
+    <h2 class="work-title">Portfolio</h2>
+    <div class="work-filter">
+      <button class="filter-btn active" onclick="filterWork('all', this)">All</button>
+      <button class="filter-btn" onclick="filterWork('brand', this)">Brand</button>
+      <button class="filter-btn" onclick="filterWork('corporate', this)">Corporate</button>
+      <button class="filter-btn" onclick="filterWork('product', this)">Product</button>
+    </div>
+  </div>
+
+  <div class="grid" id="portfolio-grid">
+    <div class="card" data-cat="brand" onclick="openModal('Brand Campaign — Acme Co.', '2024 · Brand Film')">
+      <div class="card-thumb">
+        <div class="card-thumb-label">Replace with thumbnail</div>
+        <div class="card-play">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white" stroke="none"/></svg>
+        </div>
+      </div>
+      <div class="card-info">
+        <span class="card-title">Brand Campaign — Acme Co.</span>
+        <span class="card-meta">2024 · Brand Film</span>
+      </div>
+    </div>
+
+    <div class="card" data-cat="corporate" onclick="openModal('Annual Report Film — Globex', '2024 · Corporate')">
+      <div class="card-thumb">
+        <div class="card-thumb-label">Replace with thumbnail</div>
+        <div class="card-play">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white" stroke="none"/></svg>
+        </div>
+      </div>
+      <div class="card-info">
+        <span class="card-title">Annual Report — Globex</span>
+        <span class="card-meta">2024 · Corporate</span>
+      </div>
+    </div>
+
+    <div class="card" data-cat="product" onclick="openModal('Product Launch — Nova', '2023 · Product')">
+      <div class="card-thumb">
+        <div class="card-thumb-label">Replace with thumbnail</div>
+        <div class="card-play">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white" stroke="none"/></svg>
+        </div>
+      </div>
+      <div class="card-info">
+        <span class="card-title">Product Launch — Nova</span>
+        <span class="card-meta">2023 · Product</span>
+      </div>
+    </div>
+
+    <div class="card" data-cat="brand" onclick="openModal('Brand Identity Film — Meridian', '2023 · Brand Film')">
+      <div class="card-thumb">
+        <div class="card-thumb-label">Replace with thumbnail</div>
+        <div class="card-play">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white" stroke="none"/></svg>
+        </div>
+      </div>
+      <div class="card-info">
+        <span class="card-title">Brand Identity — Meridian</span>
+        <span class="card-meta">2023 · Brand Film</span>
+      </div>
+    </div>
+
+    <div class="card" data-cat="corporate" onclick="openModal('Internal Comms — Vertex', '2023 · Corporate')">
+      <div class="card-thumb">
+        <div class="card-thumb-label">Replace with thumbnail</div>
+        <div class="card-play">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white" stroke="none"/></svg>
+        </div>
+      </div>
+      <div class="card-info">
+        <span class="card-title">Internal Comms — Vertex</span>
+        <span class="card-meta">2023 · Corporate</span>
+      </div>
+    </div>
+
+    <div class="card" data-cat="product" onclick="openModal('Product Reel — Solara', '2022 · Product')">
+      <div class="card-thumb">
+        <div class="card-thumb-label">Replace with thumbnail</div>
+        <div class="card-play">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white" stroke="none"/></svg>
+        </div>
+      </div>
+      <div class="card-info">
+        <span class="card-title">Product Reel — Solara</span>
+        <span class="card-meta">2022 · Product</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image"></div>
+  <div class="about-text">
+    <div class="section-label">About</div>
+    <h2>Telling brand stories through the lens.</h2>
+    <p>I'm a commercial videographer specialising in brand films and corporate content that communicates clearly and looks exceptional. Every project begins with understanding what a brand needs to say — and finding the most compelling way to say it visually.</p>
+    <p>With [X] years of experience working with agencies and direct clients, I deliver broadcast-quality production with a streamlined, professional process from brief to delivery.</p>
+    <div class="stats">
+      <div>
+        <span class="stat-num">80+</span>
+        <span class="stat-label">Projects</span>
+      </div>
+      <div>
+        <span class="stat-num">40+</span>
+        <span class="stat-label">Clients</span>
+      </div>
+      <div>
+        <span class="stat-num">6+</span>
+        <span class="stat-label">Years</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-label">What I Do</div>
+      <h2 class="services-title">Services</h2>
+    </div>
+  </div>
+  <div class="services-list">
+    <div class="service-item">
+      <span class="service-num">01</span>
+      <div>
+        <div class="service-name">Brand Films</div>
+        <div class="service-desc">Hero videos and brand identity films that define how your company presents itself to the world.</div>
+      </div>
+      <svg class="service-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+    <div class="service-item">
+      <span class="service-num">02</span>
+      <div>
+        <div class="service-name">Corporate Video</div>
+        <div class="service-desc">Internal communications, executive interviews, and event coverage that engage your teams and stakeholders.</div>
+      </div>
+      <svg class="service-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+    <div class="service-item">
+      <span class="service-num">03</span>
+      <div>
+        <div class="service-name">Product Video</div>
+        <div class="service-desc">Clean, compelling product showcases for launch campaigns, e-commerce, and advertising.</div>
+      </div>
+      <svg class="service-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+    <div class="service-item">
+      <span class="service-num">04</span>
+      <div>
+        <div class="service-name">Social Content</div>
+        <div class="service-desc">Short-form video assets optimised for social platforms and digital advertising campaigns.</div>
+      </div>
+      <svg class="service-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get in Touch</div>
+  <h2 class="contact-title">Have a project<br>in <em>mind?</em></h2>
+  <p class="contact-sub">Let's talk about what you need.</p>
+  <a href="mailto:hello@yourname.com" class="contact-email">hello@yourname.com</a>
+  <div class="contact-links">
+    <a href="https://instagram.com/yourhandle" class="contact-link" target="_blank">Instagram</a>
+    <a href="https://vimeo.com/yourhandle" class="contact-link" target="_blank">Vimeo</a>
+    <a href="https://linkedin.com/in/yourhandle" class="contact-link" target="_blank">LinkedIn</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Your Name. All rights reserved.</p>
+  <p>Commercial Videographer</p>
+</footer>
+
+<!-- VIDEO MODAL -->
+<div class="modal-backdrop" id="modal" onclick="closeModal(event)">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeModal()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      Close
+    </button>
+    <div class="modal-video-wrap" id="modal-video">
+      <!-- Paste your Vimeo/YouTube embed iframe here -->
+      <span>Embed your video here (Vimeo or YouTube iframe)</span>
+    </div>
+    <p class="modal-title" id="modal-title"></p>
+    <p class="modal-meta" id="modal-meta"></p>
+  </div>
+</div>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  function openModal(title, meta) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-meta').textContent = meta;
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(e) {
+    if (!e || e.target === document.getElementById('modal')) {
+      document.getElementById('modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function filterWork(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.card').forEach(card => {
+      card.style.opacity = (cat === 'all' || card.dataset.cat === cat) ? '1' : '0.25';
+    });
+  }
+</script>
+</body>
+</html>
