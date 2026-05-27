@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Harrison Messinger — Videographer</title>
+<title>Harrison Messinger — Video Partner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -459,6 +459,7 @@
   .modal-backdrop.open { display: flex; }
   .modal-inner { position: relative; width: min(800px, 90vw); }
   .modal-video-wrap {
+    position: relative;
     aspect-ratio: 16/9;
     background: #000;
     display: flex;
@@ -511,7 +512,7 @@
 <body>
 
 <nav id="navbar">
-  <a href="#" class="nav-logo">Harrison M.</a>
+  <a href="#" class="nav-logo">Harrison Messinger</a>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#about">About</a></li>
@@ -525,7 +526,7 @@
   <div class="hero-bg"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">Video Partner — Based in Los Angeles</p>
-    <h1>Building visual <br> <em>trust points</em></h1>
+    <h1>Building trust<br>you can <em>see.</em></h1>
     <p class="hero-desc">Brand films, corporate content, and commercial video production crafted to communicate with precision and impact.</p>
     <a href="#work" class="hero-cta">
       View Work
@@ -549,7 +550,7 @@
   </div>
 
   <div class="grid" id="portfolio-grid">
-    <div class="card" data-cat="brand" onclick="openModal('Brand Campaign — JBabe.', '2024 · Brand Film')">
+    <div class="card" data-cat="brand" onclick="openModal('Brand Campaign — Acme Co.', '2024 · Brand Film', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_1')">
       <div class="card-thumb">
         <div class="card-thumb-label">Replace with thumbnail</div>
         <div class="card-play">
@@ -562,7 +563,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="corporate" onclick="openModal('Annual Report Film — Globex', '2024 · Corporate')">
+    <div class="card" data-cat="corporate" onclick="openModal('Annual Report Film — Globex', '2024 · Corporate', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_2')">
       <div class="card-thumb">
         <div class="card-thumb-label">Replace with thumbnail</div>
         <div class="card-play">
@@ -575,7 +576,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="product" onclick="openModal('Product Launch — Nova', '2023 · Product')">
+    <div class="card" data-cat="product" onclick="openModal('Product Launch — Nova', '2023 · Product', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_3')">
       <div class="card-thumb">
         <div class="card-thumb-label">Replace with thumbnail</div>
         <div class="card-play">
@@ -588,7 +589,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="brand" onclick="openModal('Brand Identity Film — Meridian', '2023 · Brand Film')">
+    <div class="card" data-cat="brand" onclick="openModal('Brand Identity Film — Meridian', '2023 · Brand Film', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_4')">
       <div class="card-thumb">
         <div class="card-thumb-label">Replace with thumbnail</div>
         <div class="card-play">
@@ -601,7 +602,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="corporate" onclick="openModal('Internal Comms — Vertex', '2023 · Corporate')">
+    <div class="card" data-cat="corporate" onclick="openModal('Internal Comms — Vertex', '2023 · Corporate', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_5')">
       <div class="card-thumb">
         <div class="card-thumb-label">Replace with thumbnail</div>
         <div class="card-play">
@@ -614,7 +615,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="product" onclick="openModal('Product Reel — Solara', '2022 · Product')">
+    <div class="card" data-cat="product" onclick="openModal('Product Reel — Solara', '2022 · Product', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_6')">
       <div class="card-thumb">
         <div class="card-thumb-label">Replace with thumbnail</div>
         <div class="card-play">
@@ -712,19 +713,19 @@
 </section>
 
 <footer>
-  <p>© 2025 Your Name. All rights reserved.</p>
-  <p>Commercial Videographer</p>
+  <p>© 2025 Harrison Messinger. All rights reserved.</p>
+  <p>Video Partner</p>
 </footer>
 
 <!-- VIDEO MODAL -->
 <div class="modal-backdrop" id="modal" onclick="closeModal(event)">
   <div class="modal-inner">
-    <button class="modal-close" onclick="closeModal()">
+    <button class="modal-close" onclick="closeModal(null)">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
       Close
     </button>
     <div class="modal-video-wrap" id="modal-video">
-      <iframe src="https://player.vimeo.com/video/873140757?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="1920" height="1080" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Harrison M. Videography Reel"></iframe><!-- Paste your Vimeo/YouTube embed iframe here -->
+      <!-- Paste your Vimeo/YouTube embed iframe here -->
       <span>Embed your video here (Vimeo or YouTube iframe)</span>
     </div>
     <p class="modal-title" id="modal-title"></p>
@@ -738,14 +739,18 @@
     navbar.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  function openModal(title, meta) {
+  function openModal(title, meta, videoUrl) {
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-meta').textContent = meta;
+    document.getElementById('modal-video').innerHTML = videoUrl
+      ? `<iframe src="${videoUrl}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;"></iframe>`
+      : '<span>Embed your video here (Vimeo or YouTube iframe)</span>';
     document.getElementById('modal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
   function closeModal(e) {
     if (!e || e.target === document.getElementById('modal')) {
+      document.getElementById('modal-video').innerHTML = '';
       document.getElementById('modal').classList.remove('open');
       document.body.style.overflow = '';
     }
