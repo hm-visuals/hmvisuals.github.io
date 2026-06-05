@@ -69,21 +69,26 @@
   /* HERO */
   .hero {
     min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    background: var(--white);
+    padding-top: 5rem;
+  }
+  .hero-left {
+    padding: 5rem 4rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 4rem 5rem;
-    position: relative;
-    overflow: hidden;
-    background: var(--white);
+    justify-content: center;
   }
-  .hero-bg {
-    position: absolute;
-    inset: 0;
+  .hero-right {
     background: var(--gray-light);
-    clip-path: polygon(0 0, 58% 0, 45% 100%, 0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
   }
-  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-content { max-width: 520px; }
   .hero-eyebrow {
     font-size: 0.75rem;
     letter-spacing: 0.15em;
@@ -93,7 +98,7 @@
   }
   .hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-size: clamp(2.8rem, 4vw, 5rem);
     font-weight: 400;
     line-height: 1.08;
     letter-spacing: -0.01em;
@@ -106,7 +111,7 @@
   .hero-desc {
     font-size: 1rem;
     color: var(--gray-text);
-    max-width: 420px;
+    max-width: 380px;
     line-height: 1.7;
     margin-bottom: 3rem;
   }
@@ -128,26 +133,71 @@
   .hero-cta svg { transition: transform 0.2s; }
   .hero-cta:hover svg { transform: translateX(4px); }
 
-  .hero-scroll {
+  /* SIZZLE REEL */
+  .sizzle-wrap { width: 100%; max-width: 560px; }
+  .sizzle-reel {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--black);
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .sizzle-thumb {
     position: absolute;
-    bottom: 2rem;
-    right: 4rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gray-text);
-    writing-mode: vertical-rl;
+    inset: 0;
+    background: linear-gradient(135deg, #2C2C2A 0%, #111110 100%);
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    justify-content: center;
   }
-  .hero-scroll::before {
-    content: '';
-    display: block;
-    width: 1px;
-    height: 48px;
-    background: var(--gray-mid);
+  .sizzle-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover; opacity: 0.7;
   }
+  .sizzle-play-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 2;
+    transition: transform 0.3s;
+  }
+  .sizzle-reel:hover .sizzle-play-btn { transform: scale(1.05); }
+  .sizzle-play-circle {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(250,250,248,0.15);
+    border: 1.5px solid rgba(250,250,248,0.5);
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s;
+  }
+  .sizzle-reel:hover .sizzle-play-circle { background: rgba(250,250,248,0.25); }
+  .sizzle-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(250,250,248,0.7);
+  }
+  .sizzle-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .sizzle-caption-title { font-size: 0.82rem; font-weight: 500; }
+  .sizzle-caption-meta { font-size: 0.75rem; color: var(--gray-text); }
+  .sizzle-iframe-wrap {
+    display: none;
+    position: absolute;
+    inset: 0; z-index: 10;
+  }
+  .sizzle-iframe-wrap iframe { width: 100%; height: 100%; border: none; }
+  .sizzle-iframe-wrap.playing { display: block; }
+  .hero-scroll { display: none; }
 
   /* SECTION COMMON */
   section { padding: 7rem 4rem; }
@@ -497,15 +547,54 @@
   .modal-meta { color: #888780; font-size: 0.82rem; margin-top: 0.25rem; }
 
   @media (max-width: 768px) {
-    nav { padding: 1.25rem 1.5rem; }
+    /* Nav */
+    nav { padding: 1rem 1.25rem; }
     .nav-links { display: none; }
-    section { padding: 4rem 1.5rem; }
-    .hero { padding: 0 1.5rem 4rem; }
-    .hero-scroll { display: none; }
+
+    /* Hero: stack vertically, tight padding */
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding-top: 0;
+    }
+    .hero-left {
+      padding: 5.5rem 1.25rem 2rem;
+    }
+    .hero-right {
+      padding: 0 1.25rem 3rem;
+      background: var(--white);
+    }
+    .hero h1 { font-size: 2.4rem; }
+    .hero-desc { font-size: 0.9rem; }
+    .sizzle-wrap { max-width: 100%; }
+
+    /* Sections */
+    section { padding: 3.5rem 1.25rem; }
+    #about { grid-template-columns: 1fr; gap: 2rem; padding: 3.5rem 1.25rem; }
+    .about-image { aspect-ratio: 3/2; }
+    .stats { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+    /* Portfolio grid */
     .card:nth-child(n) { grid-column: span 12; }
-    #about { grid-template-columns: 1fr; gap: 2rem; }
-    .work-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-    footer { padding: 1.25rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .work-header { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+    .work-filter { flex-wrap: wrap; }
+
+    /* Services */
+    .service-item { grid-template-columns: 2rem 1fr auto; gap: 1rem; padding: 1.5rem 0; }
+    .service-desc { display: none; }
+
+    /* Contact */
+    #contact { padding: 4rem 1.25rem; }
+    .contact-title { font-size: 2.2rem; }
+    .contact-email { font-size: 1rem; }
+    .contact-links { flex-wrap: wrap; gap: 1.25rem; }
+
+    /* Footer */
+    footer { padding: 1.25rem; flex-direction: column; gap: 0.4rem; text-align: center; }
+
+    /* Modal */
+    .modal-inner { width: 95vw; }
+    .modal-close { top: -2.5rem; }
   }
 </style>
 </head>
@@ -523,17 +612,39 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Video Partner — Based in Los Angeles</p>
-    <h1>Building trust<br>you can <em>see.</em></h1>
-    <p class="hero-desc">Brand films, corporate content, and commercial video production crafted to communicate with precision and impact.</p>
-    <a href="#work" class="hero-cta">
-      View Work
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+  <div class="hero-left">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Video Partner — Based in Los Angeles</p>
+      <h1>Building trust<br>you can <em>see.</em></h1>
+      <p class="hero-desc">Brand films, corporate content, and commercial video production crafted to communicate with precision and impact.</p>
+      <a href="#work" class="hero-cta">
+        View Work
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
   </div>
-  <div class="hero-scroll">Scroll</div>
+  <div class="hero-right">
+    <div class="sizzle-wrap">
+      <div class="sizzle-reel" id="sizzle-reel" onclick="playSizzle()">
+        <div class="sizzle-thumb">
+          <!-- Optional: add a thumbnail image here: <img src="images/sizzle-thumb.jpg" alt="Sizzle reel"> -->
+        </div>
+        <div class="sizzle-play-btn">
+          <div class="sizzle-play-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <span class="sizzle-label">Watch Reel</span>
+        </div>
+        <div class="sizzle-iframe-wrap" id="sizzle-iframe-wrap">
+          <!-- Sizzle reel iframe injected by JS -->
+        </div>
+      </div>
+      <div class="sizzle-caption">
+        <span class="sizzle-caption-title">Harrison Messinger — 2024 Reel</span>
+        <span class="sizzle-caption-meta">1:32</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- WORK -->
@@ -550,7 +661,7 @@
   </div>
 
   <div class="grid" id="portfolio-grid">
-    <div class="card" data-cat="brand" onclick="openModal('Brand Campaign — Acme Co.', '2024 · Brand Film', 'https://player.vimeo.com/video/873140757')">
+    <div class="card" data-cat="brand" onclick="openModal('Brand Campaign — Acme Co.', '2024 · Brand Film', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_1')">
       <div class="card-thumb">
         <div class="card-thumb-label">Replace with thumbnail</div>
         <div class="card-play">
@@ -763,6 +874,16 @@
     document.querySelectorAll('.card').forEach(card => {
       card.style.opacity = (cat === 'all' || card.dataset.cat === cat) ? '1' : '0.25';
     });
+  }
+
+  // Replace with your actual Vimeo or YouTube sizzle reel URL
+  const SIZZLE_URL = 'https://player.vimeo.com/video/YOUR_SIZZLE_REEL_ID?autoplay=1';
+
+  function playSizzle() {
+    const wrap = document.getElementById('sizzle-iframe-wrap');
+    if (wrap.classList.contains('playing')) return;
+    wrap.innerHTML = `<iframe src="${SIZZLE_URL}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    wrap.classList.add('playing');
   }
 </script>
 </body>
