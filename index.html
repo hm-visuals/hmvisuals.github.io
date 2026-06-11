@@ -382,17 +382,20 @@
     gap: 6rem;
     align-items: center;
   }
-  .about-image {
-    aspect-ratio: 4/5;
-    background: var(--gray-mid);
-    position: relative;
-    overflow: hidden;
-  }
-  .about-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: var(--gray-text);
+    letter-spacing: 0.05em;
   }
   .about-text h2 {
     font-family: var(--font-display);
@@ -706,14 +709,14 @@
     <h2 class="work-title">Portfolio</h2>
     <div class="work-filter">
       <button class="filter-btn active" onclick="filterWork('all', this)">All</button>
-      <button class="filter-btn" onclick="filterWork('brand', this)">Brand</button>
+      <button class="filter-btn" onclick="filterWork('commercial', this)">Commercial</button>
       <button class="filter-btn" onclick="filterWork('corporate', this)">Corporate</button>
-      <button class="filter-btn" onclick="filterWork('product', this)">Product</button>
+      <button class="filter-btn" onclick="filterWork('testimonial', this)">Testimonial</button>
     </div>
   </div>
 
   <div class="grid" id="portfolio-grid">
-    <div class="card" data-cat="brand" onclick="openModal('Brand Campaign — JLash USA', '2023 · Brand Film', 'https://player.vimeo.com/video/1198934300')">
+    <div class="card" data-cat="commercial" onclick="openModal('Brand Campaign — JLash USA', '2023 · Brand Film', 'https://player.vimeo.com/video/1198934300')">
       <div class="card-thumb">
         <img src="images/PJ Party Christmas 3 actresses.jpg" alt="Brand Campaign — JLash USA" onerror="this.style.display='none'">
         <div class="card-play">
@@ -739,9 +742,9 @@
       </div>
     </div>
 
-    <div class="card" data-cat="product" onclick="openModal('Product Launch — Nova', '2023 · Product', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_3')">
+    <div class="card" data-cat="testimonial" onclick="openModal('Client Testimonial — Secure Choice Lending', '2024 · Testimonial', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_3')">
       <div class="card-thumb">
-        <<img src="images/brian and khaussandra testimonial thumb.jpg" alt="Project thumbnail">
+        <!-- Add thumbnail: <img src="images/project-2.jpg" alt="Project thumbnail"> -->
         <div class="card-play">
           <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white" stroke="none"/></svg>
         </div>
@@ -752,7 +755,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="brand" onclick="openModal('Influencer Product Collaboration', '2023 · Launch Campaign', 'https://player.vimeo.com/video/1198937812')">
+    <div class="card" data-cat="commercial" onclick="openModal('Influencer Product Collaboration', '2023 · Launch Campaign', 'https://player.vimeo.com/video/1198937812')">
       <div class="card-thumb">
         <img src="images/LUIS TORRES VOL_01_00_08_03.jpg" alt="Influencer Product Collaboration" onerror="this.style.display='none'">
         <div class="card-play">
@@ -778,7 +781,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="product" onclick="openModal('Product Reel — Solara', '2022 · Product', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_6')">
+    <div class="card" data-cat="testimonial" onclick="openModal('Product Reel — Solara', '2022 · Product', 'https://player.vimeo.com/video/YOUR_VIDEO_ID_6')">
       <div class="card-thumb">
         <!-- Add thumbnail: <img src="images/project-4.jpg" alt="Project thumbnail"> -->
         <div class="card-play">
@@ -795,9 +798,7 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="about-image">
-    <img src="images/AC4A3390 v2.jpg" alt="Harrison Messinger" onerror="this.style.display='none'">
-  </div>
+  <div class="images/AC4A3390 v2.jpg"></div>
   <div class="about-text">
     <div class="section-label">About</div>
     <h2>Telling brand stories through the lens.</h2>
