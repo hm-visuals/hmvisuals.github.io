@@ -382,20 +382,17 @@
     gap: 6rem;
     align-items: center;
   }
-.about-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    color: var(--gray-text);
-    letter-spacing: 0.05em;
+  .about-image {
+    aspect-ratio: 4/5;
+    background: var(--gray-mid);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .about-text h2 {
     font-family: var(--font-display);
@@ -798,7 +795,9 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="images/AC4A3390 v2.jpg"></div>
+  <div class="about-image">
+    <img src="images/AC4A3390 v2.jpg" alt="Harrison Messinger" onerror="this.style.display='none'">
+  </div>
   <div class="about-text">
     <div class="section-label">About</div>
     <h2>Telling brand stories through the lens.</h2>
