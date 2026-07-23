@@ -43,9 +43,14 @@
     background: rgba(250,250,248,0.92);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid transparent;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, opacity 0.35s ease, transform 0.35s ease;
   }
   nav.scrolled { border-color: var(--gray-mid); }
+  nav.nav-hidden {
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
 
   /* HAMBURGER MENU */
   .nav-hamburger {
@@ -400,12 +405,13 @@
   #about {
     background: var(--gray-light);
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
+    grid-template-columns: minmax(240px, 360px) 1fr;
+    gap: 5rem;
     align-items: center;
   }
   .about-image {
     aspect-ratio: 4/5;
+    max-width: 360px;
     background: var(--gray-mid);
     position: relative;
     overflow: hidden;
@@ -977,6 +983,8 @@
     wrap.innerHTML = `<iframe src="${SIZZLE_URL}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     wrap.classList.add('playing');
     hero.classList.add('playing');
+    isSizzlePlaying = true;
+    updateNavVisibility();
   }
 
   function closeSizzle() {
@@ -985,7 +993,25 @@
     wrap.classList.remove('playing');
     wrap.innerHTML = '';
     hero.classList.remove('playing');
+    isSizzlePlaying = false;
+    updateNavVisibility();
   }
+
+  // Hide the nav bar while the hero video is playing AND the hero is in view,
+  // so the top bar never covers the video — but bring it back the moment the
+  // user scrolls away from the hero (or closes the video).
+  let isSizzlePlaying = false;
+  let isHeroVisible = true;
+  function updateNavVisibility() {
+    navbar.classList.toggle('nav-hidden', isSizzlePlaying && isHeroVisible);
+  }
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isHeroVisible = entry.isIntersecting;
+      updateNavVisibility();
+    });
+  }, { threshold: 0.2 });
+  heroObserver.observe(document.getElementById('home'));
 </script>
 </body>
 </html>
